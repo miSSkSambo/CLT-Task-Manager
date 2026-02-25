@@ -1,49 +1,5 @@
-import json
-import os
 import sys
-
-TASKS_FILE = "tasks.json"
-
-
-def load_tasks():
-    if not os.path.exists(TASKS_FILE):
-        return []
-    with open(TASKS_FILE, "r") as f:
-        return json.load(f)
-
-
-def save_tasks(tasks):
-    with open(TASKS_FILE, "w") as f:
-        json.dump(tasks, f, indent=4)
-
-
-def add_task(task):
-    tasks = load_tasks()
-    tasks.append(task)
-    save_tasks(tasks)
-    print("✅ Task added.")
-
-
-def list_tasks():
-    tasks = load_tasks()
-    if not tasks:
-        print("📭 No tasks found.")
-        return
-
-    print("\n📋 Task List:")
-    for i, task in enumerate(tasks, 1):
-        print(f"{i}. {task}")
-
-
-def delete_task(index):
-    tasks = load_tasks()
-    if index < 1 or index > len(tasks):
-        print("❌ Invalid task number.")
-        return
-
-    removed = tasks.pop(index - 1)
-    save_tasks(tasks)
-    print(f"🗑 Removed: {removed}")
+from task_manager import add_task, list_tasks, delete_task, complete_task
 
 
 def main():
@@ -52,22 +8,38 @@ def main():
         print("  python main.py add 'Task name'")
         print("  python main.py list")
         print("  python main.py delete <task_number>")
+        print("  python main.py complete <task_number>")
         return
 
     command = sys.argv[1]
 
-    if command == "add":
-        task = sys.argv[2]
-        add_task(task)
+    try:
+        if command == "add":
+            add_task(sys.argv[2])
+            print("✅ Task added.")
 
-    elif command == "list":
-        list_tasks()
+        elif command == "list":
+            tasks = list_tasks()
+            if not tasks:
+                print("📭 No tasks.")
+            else:
+                for i, task in enumerate(tasks):
+                    status = "✔" if task["completed"] else "✘"
+                    print(f"{i}. [{status}] {task['title']}")
 
-    elif command == "delete":
-        delete_task(int(sys.argv[2]))
+        elif command == "delete":
+            removed = delete_task(int(sys.argv[2]))
+            print(f"🗑 Removed: {removed['title']}")
 
-    else:
-        print("❌ Unknown command.")
+        elif command == "complete":
+            complete_task(int(sys.argv[2]))
+            print("🎉 Task completed.")
+
+        else:
+            print("❌ Unknown command.")
+
+    except Exception as e:
+        print("Error:", e)
 
 
 if __name__ == "__main__":
