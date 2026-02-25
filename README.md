@@ -37,19 +37,24 @@ This project demonstrates:
 
 ---
 
-# 🏗️ Architecture Overview
+# 🏗 Architecture Overview
 
+```
 python-task-manager/
 │
-├── venv/                     # Virtual environment
-├── src/
-│   ├── __init__.py
-│   ├── main.py               # CLI entry point
-│   └── task_manager.py       # Business logic layer
+├── venv/                         # Python virtual environment
 │
-├── tasks.json                # Data persistence layer
-├── requirements.txt
-└── README.md
+├── src/                          # Application source code
+│   ├── __init__.py
+│   ├── main.py                   # CLI entry point
+│   └── task_manager.py           # Core business logic
+│
+├── tasks.json                    # JSON persistence layer
+├── requirements.txt              # Project dependencies
+├── CONTRIBUTING.md               # Contribution guidelines
+├── LICENSE                       # MIT License
+└── README.md                     # Project documentation
+```
 
 ---
 
