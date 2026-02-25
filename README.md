@@ -40,16 +40,15 @@ This project demonstrates:
 # 🏗️ Architecture Overview
 
 python-task-manager/
+│
+├── venv/                     # Virtual environment
 ├── src/
-│   ├── main.py
-│   └── task_manager.py
-├── tests/
-│   └── test_task_manager.py
-├── .github/workflows/ci.yml
-├── tasks.json
+│   ├── __init__.py
+│   ├── main.py               # CLI entry point
+│   └── task_manager.py       # Business logic layer
+│
+├── tasks.json                # Data persistence layer
 ├── requirements.txt
-├── CONTRIBUTING.md
-├── LICENSE
 └── README.md
 
 ---
